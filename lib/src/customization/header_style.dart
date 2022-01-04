@@ -81,18 +81,21 @@ class HeaderStyle {
 
   /// Creates a `HeaderStyle` used by `TableCalendar` widget.
   const HeaderStyle({
-    this.titleCentered = false,
-    this.formatButtonVisible = true,
+    this.titleCentered = true,
+    this.formatButtonVisible = false,
     this.formatButtonShowsNext = true,
     this.titleTextFormatter,
-    this.titleTextStyle = const TextStyle(fontSize: 17.0),
+    this.titleTextStyle = const TextStyle(
+        fontSize: 17.0,
+        color: Color.fromRGBO(4, 23, 46, 1),
+        fontWeight: FontWeight.w600),
     this.formatButtonTextStyle = const TextStyle(),
     this.formatButtonDecoration = const BoxDecoration(
       border: const Border.fromBorderSide(BorderSide()),
       borderRadius: const BorderRadius.all(Radius.circular(12.0)),
     ),
-    this.headerMargin = const EdgeInsets.all(0.0),
-    this.headerPadding = const EdgeInsets.symmetric(vertical: 8.0),
+    this.headerMargin = const EdgeInsets.all(20.0),
+    this.headerPadding = EdgeInsets.zero,
     this.formatButtonPadding =
         const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
     this.leftChevronPadding = const EdgeInsets.all(12.0),
@@ -103,6 +106,16 @@ class HeaderStyle {
     this.rightChevronIcon = const Icon(Icons.chevron_right),
     this.leftChevronVisible = true,
     this.rightChevronVisible = true,
-    this.decoration = const BoxDecoration(),
+    this.decoration = const BoxDecoration(
+        color: Color.fromRGBO(255, 255, 255, 1),
+        border: Border(
+          top: BorderSide(color: Color.fromRGBO(230, 233, 235, 1)),
+          left: BorderSide(color: Color.fromRGBO(230, 233, 235, 1)),
+          bottom: BorderSide(color: Color.fromRGBO(230, 233, 235, 1)),
+          right: BorderSide(color: Color.fromRGBO(230, 233, 235, 1)),
+        ),
+        boxShadow: [
+          BoxShadow(blurRadius: 10.0, color: Color.fromRGBO(230, 233, 235, 1))
+        ]),
   });
 }

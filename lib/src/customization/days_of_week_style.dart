@@ -1,6 +1,7 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../shared/utils.dart' show TextFormatter;
@@ -30,7 +31,9 @@ class DaysOfWeekStyle {
   const DaysOfWeekStyle({
     this.dowTextFormatter,
     this.decoration = const BoxDecoration(),
-    this.weekdayStyle = const TextStyle(color: const Color(0xFF4F4F4F)),
-    this.weekendStyle = const TextStyle(color: const Color(0xFF6A6A6A)),
+    this.weekdayStyle =
+        const TextStyle(color: Color.fromRGBO(133, 145, 154, 1)),
+    this.weekendStyle =
+        const TextStyle(color: Color.fromRGBO(133, 145, 154, 1)),
   });
 }

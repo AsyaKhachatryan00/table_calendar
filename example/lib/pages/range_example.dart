@@ -1,10 +1,5 @@
-// Copyright 2019 Aleksander Woźniak
-// SPDX-License-Identifier: Apache-2.0
-
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-
-import '../utils.dart';
 
 class TableRangeExample extends StatefulWidget {
   @override
@@ -12,9 +7,7 @@ class TableRangeExample extends StatefulWidget {
 }
 
 class _TableRangeExampleState extends State<TableRangeExample> {
-  CalendarFormat _calendarFormat = CalendarFormat.month;
-  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
-      .toggledOn; // Can be toggled on/off by longpressing a date
+  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOn;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   DateTime? _rangeStart;
@@ -27,25 +20,31 @@ class _TableRangeExampleState extends State<TableRangeExample> {
         title: Text('TableCalendar - Range'),
       ),
       body: TableCalendar(
-        firstDay: kFirstDay,
-        lastDay: kLastDay,
+        firstDay: DateTime(1677 - 09 - 21),
+        lastDay: DateTime(2262 - 04 - 11),
         focusedDay: _focusedDay,
         selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
         rangeStartDay: _rangeStart,
         rangeEndDay: _rangeEnd,
-        calendarFormat: _calendarFormat,
         rangeSelectionMode: _rangeSelectionMode,
         onDaySelected: (selectedDay, focusedDay) {
           if (!isSameDay(_selectedDay, selectedDay)) {
             setState(() {
-              _selectedDay = selectedDay;
+              _selectedDay = null;
               _focusedDay = focusedDay;
-              _rangeStart = null; // Important to clean those
+              _rangeStart = null;
               _rangeEnd = null;
-              _rangeSelectionMode = RangeSelectionMode.toggledOff;
+              _rangeSelectionMode = RangeSelectionMode.toggledOn;
             });
           }
         },
+        headerStyle: HeaderStyle(
+            rightChevronIcon: Image.asset('assets/icons/ic_arrow_next.png',
+                height: 25, width: 25, fit: BoxFit.cover),
+            leftChevronIcon: Image.asset('assets/icons/ic_arrow_previus.png',
+                height: 25, width: 25, fit: BoxFit.cover),
+            headerMargin: EdgeInsets.all(20.0),
+            headerPadding: EdgeInsets.zero),
         onRangeSelected: (start, end, focusedDay) {
           setState(() {
             _selectedDay = null;
@@ -54,13 +53,6 @@ class _TableRangeExampleState extends State<TableRangeExample> {
             _rangeEnd = end;
             _rangeSelectionMode = RangeSelectionMode.toggledOn;
           });
-        },
-        onFormatChanged: (format) {
-          if (_calendarFormat != format) {
-            setState(() {
-              _calendarFormat = format;
-            });
-          }
         },
         onPageChanged: (focusedDay) {
           _focusedDay = focusedDay;

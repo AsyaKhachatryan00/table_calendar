@@ -1,7 +1,7 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 /// Class containing styling and configuration for `TableCalendar`'s content.
 class CalendarStyle {
@@ -147,7 +147,7 @@ class CalendarStyle {
 
   /// Creates a `CalendarStyle` used by `TableCalendar` widget.
   const CalendarStyle({
-    this.isTodayHighlighted = true,
+    this.isTodayHighlighted = false,
     this.canMarkersOverflow = true,
     this.outsideDaysVisible = true,
     this.markersAutoAligned = true,
@@ -162,7 +162,7 @@ class CalendarStyle {
     this.cellPadding = const EdgeInsets.all(0),
     this.cellAlignment = Alignment.center,
     this.markersOffset = const PositionedOffset(),
-    this.rangeHighlightColor = const Color(0xFFBBDDFF),
+    this.rangeHighlightColor = const Color.fromRGBO(72, 125, 165, 1),
     this.markerDecoration = const BoxDecoration(
       color: const Color(0xFF263238),
       shape: BoxShape.circle,
@@ -180,7 +180,7 @@ class CalendarStyle {
       fontSize: 16.0,
     ),
     this.selectedDecoration = const BoxDecoration(
-      color: const Color(0xFF5C6BC0),
+      color: const Color.fromRGBO(72, 125, 165, 1),
       shape: BoxShape.circle,
     ),
     this.rangeStartTextStyle = const TextStyle(
@@ -188,7 +188,7 @@ class CalendarStyle {
       fontSize: 16.0,
     ),
     this.rangeStartDecoration = const BoxDecoration(
-      color: const Color(0xFF6699FF),
+      color: const Color.fromRGBO(72, 125, 165, 1),
       shape: BoxShape.circle,
     ),
     this.rangeEndTextStyle = const TextStyle(
@@ -196,10 +196,10 @@ class CalendarStyle {
       fontSize: 16.0,
     ),
     this.rangeEndDecoration = const BoxDecoration(
-      color: const Color(0xFF6699FF),
+      color: const Color.fromRGBO(72, 125, 165, 1),
       shape: BoxShape.circle,
     ),
-    this.withinRangeTextStyle = const TextStyle(),
+    this.withinRangeTextStyle = const TextStyle(color: Colors.white),
     this.withinRangeDecoration = const BoxDecoration(shape: BoxShape.circle),
     this.outsideTextStyle = const TextStyle(color: const Color(0xFFAEAEAE)),
     this.outsideDecoration = const BoxDecoration(shape: BoxShape.circle),

@@ -54,7 +54,7 @@ class TableCalendarBase extends StatefulWidget {
     this.pageAnimationEnabled = true,
     this.pageAnimationDuration = const Duration(milliseconds: 300),
     this.pageAnimationCurve = Curves.easeOut,
-    this.startingDayOfWeek = StartingDayOfWeek.sunday,
+    this.startingDayOfWeek = StartingDayOfWeek.saturday,
     this.availableGestures = AvailableGestures.all,
     this.simpleSwipeConfig = const SimpleSwipeConfig(
       verticalThreshold: 25.0,
@@ -252,7 +252,7 @@ class _TableCalendarBaseState extends State<TableCalendarBase>
   }
 
   double _getPageHeight(int rowCount) {
-    final dowHeight = widget.dowVisible ? widget.dowHeight! : 0.0;
+    final dowHeight = widget.dowVisible ? widget.dowHeight! : 1.0;
     return dowHeight + rowCount * widget.rowHeight;
   }
 

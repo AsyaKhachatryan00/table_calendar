@@ -222,15 +222,15 @@ class TableCalendar<T> extends StatefulWidget {
     this.daysOfWeekVisible = true,
     this.pageJumpingEnabled = false,
     this.pageAnimationEnabled = true,
-    this.sixWeekMonthsEnforced = false,
+    this.sixWeekMonthsEnforced = true,
     this.shouldFillViewport = false,
     this.rowHeight = 52.0,
-    this.daysOfWeekHeight = 16.0,
+    this.daysOfWeekHeight = 20.0,
     this.formatAnimationDuration = const Duration(milliseconds: 200),
     this.formatAnimationCurve = Curves.linear,
     this.pageAnimationDuration = const Duration(milliseconds: 300),
     this.pageAnimationCurve = Curves.easeOut,
-    this.startingDayOfWeek = StartingDayOfWeek.sunday,
+    this.startingDayOfWeek = StartingDayOfWeek.saturday,
     this.dayHitTestBehavior = HitTestBehavior.opaque,
     this.availableGestures = AvailableGestures.all,
     this.simpleSwipeConfig = const SimpleSwipeConfig(
@@ -327,8 +327,6 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
       final isSwipeUp = direction == SwipeDirection.up;
       int id = formats.indexOf(widget.calendarFormat);
 
-      // Order of CalendarFormats must be from biggest to smallest,
-      // e.g.: [month, twoWeeks, week]
       if (isSwipeUp) {
         id = min(formats.length - 1, id + 1);
       } else {
@@ -341,7 +339,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
   void _onDayTapped(DateTime day) {
     final isOutside = day.month != _focusedDay.value.month;
-    if (isOutside && _shouldBlockOutsideDays) {
+    if (isOutside && !_shouldBlockOutsideDays) {
       return;
     }
 
