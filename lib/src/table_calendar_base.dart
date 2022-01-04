@@ -191,7 +191,6 @@ class _TableCalendarBaseState extends State<TableCalendarBase>
                   constraints.hasBoundedHeight ? constraints.maxHeight : value;
 
               return AnimatedSize(
-                vsync: this,
                 duration: widget.formatAnimationDuration,
                 curve: widget.formatAnimationCurve,
                 alignment: Alignment.topCenter,
