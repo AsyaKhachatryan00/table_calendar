@@ -845,7 +845,7 @@ void main() {
             firstDay: firstDay,
             lastDay: lastDay,
             currentDay: today,
-            onDoubleTap: (selected, focused) {
+            onDayLongPressed: (selected, focused) {
               selectedDay = selected;
             },
           ),
@@ -873,7 +873,7 @@ void main() {
             firstDay: firstDay,
             lastDay: lastDay,
             currentDay: today,
-            onDoubleTap: (selected, focused) {
+            onDayLongPressed: (selected, focused) {
               focusedDay = focused;
             },
           ),
@@ -902,7 +902,7 @@ void main() {
             firstDay: firstDay,
             lastDay: lastDay,
             currentDay: today,
-            onDoubleTap: (selected, focused) {
+            onDayLongPressed: (selected, focused) {
               selectedDay = selected;
               focusedDay = focused;
             },
@@ -936,7 +936,7 @@ void main() {
             firstDay: firstDay,
             lastDay: lastDay,
             currentDay: DateTime.utc(2021, 8, 16),
-            onDoubleTap: (selected, focused) {
+            onDayLongPressed: (selected, focused) {
               selectedDay = selected;
               focusedDay = focused;
             },
@@ -1072,7 +1072,7 @@ void main() {
               rangeEnd = end;
               focusedDay = focused;
             },
-            onDoubleTap: null,
+            onDayLongPressed: null,
           ),
         ));
 
@@ -1127,7 +1127,7 @@ void main() {
               rangeEnd = end;
               focusedDay = focused;
             },
-            onDoubleTap: null,
+            onDayLongPressed: null,
           ),
         ));
 
@@ -1182,7 +1182,7 @@ void main() {
               rangeEnd = end;
               focusedDay = focused;
             },
-            onDoubleTap: null,
+            onDayLongPressed: null,
           ),
         ));
 
@@ -1237,7 +1237,7 @@ void main() {
               rangeEnd = end;
               focusedDay = focused;
             },
-            onDoubleTap: null,
+            onDayLongPressed: null,
           ),
         ));
 

@@ -363,6 +363,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
         }
       }
     } else {
+      _firstSelectedDay = null;
       widget.onDaySelected?.call(day, _focusedDay.value);
     }
   }
