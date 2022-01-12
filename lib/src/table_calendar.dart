@@ -178,7 +178,7 @@ class TableCalendar<T> extends StatefulWidget {
   final OnDaySelected? onDaySelected;
 
   /// Called whenever any day gets long pressed.
-  final OnDaySelected? onDoubleTap;
+  final OnDaySelected? onDayLongPressed;
 
   /// Called whenever any disabled day gets tapped.
   final void Function(DateTime day)? onDisabledDayTapped;
@@ -248,7 +248,7 @@ class TableCalendar<T> extends StatefulWidget {
     this.holidayPredicate,
     this.onRangeSelected,
     this.onDaySelected,
-    this.onDoubleTap,
+    this.onDayLongPressed,
     this.onDisabledDayTapped,
     this.onDisabledDayLongPressed,
     this.onHeaderTapped,
@@ -358,18 +358,16 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
           widget.onRangeSelected!(_firstSelectedDay, day, _focusedDay.value);
           _firstSelectedDay = null;
         } else if (day.isBefore(_firstSelectedDay!)) {
+          widget.onRangeSelected!(day, _firstSelectedDay, _focusedDay.value);
           _firstSelectedDay = null;
-          widget.onRangeSelected!(
-              _firstSelectedDay, _firstSelectedDay, _focusedDay.value);
         }
       }
     } else {
-      _firstSelectedDay = null;
       widget.onDaySelected?.call(day, _focusedDay.value);
     }
   }
 
-  void _onDoubleTap(DateTime day) {
+  void _onDayLongPressed(DateTime day) {
     final isOutside = day.month != _focusedDay.value.month;
     if (isOutside && _shouldBlockOutsideDays) {
       return;
@@ -379,9 +377,9 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
       return widget.onDisabledDayLongPressed?.call(day);
     }
 
-    if (widget.onDoubleTap != null) {
+    if (widget.onDayLongPressed != null) {
       _updateFocusOnTap(day);
-      return widget.onDoubleTap!(day, _focusedDay.value);
+      return widget.onDayLongPressed!(day, _focusedDay.value);
     }
 
     if (widget.onRangeSelected != null) {
@@ -534,7 +532,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
               return GestureDetector(
                 behavior: widget.dayHitTestBehavior,
                 onTap: () => _onDayTapped(day),
-                onDoubleTap: () => _onDoubleTap(day),
+                onLongPress: () => _onDayLongPressed(day),
                 child: _buildCell(day, focusedMonth),
               );
             },
