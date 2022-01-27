@@ -31,6 +31,53 @@ enum StartingDayOfWeek {
   sunday,
 }
 
+enum Months {
+  january,
+  february,
+  march,
+  april,
+  may,
+  june,
+  july,
+  august,
+  september,
+  october,
+  november,
+  december
+}
+
+extension MonthsExtension on Months {
+  String getMonths() {
+    switch (this) {
+      case Months.january:
+        return 'Jan';
+      case Months.february:
+        return 'Feb';
+      case Months.march:
+        return 'Mar';
+      case Months.april:
+        return 'Apr';
+      case Months.may:
+        return 'May';
+      case Months.june:
+        return 'Jun';
+      case Months.july:
+        return 'Jul';
+      case Months.august:
+        return 'Aug';
+      case Months.september:
+        return 'Sep';
+      case Months.october:
+        return 'Oct';
+      case Months.november:
+        return 'Nov';
+      case Months.december:
+        return 'Dec';
+    }
+  }
+}
+
+
 /// Returns a numerical value associated with given `weekday`.
 ///
 /// Returns 1 for `StartingDayOfWeek.monday`, all the way to 7 for `StartingDayOfWeek.sunday`.

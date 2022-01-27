@@ -3,9 +3,11 @@
 
 import 'dart:math';
 
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
+import 'package:table_calendar/src/widgets/calendar_header_only_one.dart';
 
 import 'customization/calendar_builders.dart';
 import 'customization/calendar_style.dart';
@@ -84,6 +86,8 @@ class TableCalendar<T> extends StatefulWidget {
 
   /// Determines the visibility of calendar header.
   final bool headerVisible;
+
+  final bool defaultHeader;
 
   /// Determines the visibility of the row of days of the week.
   final bool daysOfWeekVisible;
@@ -219,6 +223,7 @@ class TableCalendar<T> extends StatefulWidget {
       CalendarFormat.week: 'Week',
     },
     this.headerVisible = true,
+    this.defaultHeader = true,
     this.daysOfWeekVisible = true,
     this.pageJumpingEnabled = false,
     this.pageAnimationEnabled = true,
@@ -273,6 +278,7 @@ class TableCalendar<T> extends StatefulWidget {
 }
 
 class _TableCalendarState<T> extends State<TableCalendar<T>> {
+  final SwiperController controller = new SwiperController();
   late final PageController _pageController;
   late final ValueNotifier<DateTime> _focusedDay;
   late RangeSelectionMode _rangeSelectionMode;
@@ -427,6 +433,14 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
     }
   }
 
+  void _onHorizontalDragUpdate(DragUpdateDetails dragEndDetails) {
+    if (dragEndDetails.primaryDelta! < 0) {
+      _onRightChevronTap();
+    } else if (dragEndDetails.primaryDelta! > 0) {
+      _onLeftChevronTap();
+    }
+  }
+
   void _onLeftChevronTap() {
     _pageController.previousPage(
       duration: widget.pageAnimationDuration,
@@ -449,27 +463,36 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
           ValueListenableBuilder<DateTime>(
             valueListenable: _focusedDay,
             builder: (context, value, _) {
-              return CalendarHeader(
-                headerTitleBuilder: widget.calendarBuilders.headerTitleBuilder,
-                focusedMonth: value,
-                onLeftChevronTap: _onLeftChevronTap,
-                onRightChevronTap: _onRightChevronTap,
-                onHeaderTap: () => widget.onHeaderTapped?.call(value),
-                onHeaderLongPress: () =>
-                    widget.onHeaderLongPressed?.call(value),
-                headerStyle: widget.headerStyle,
-                availableCalendarFormats: widget.availableCalendarFormats,
-                calendarFormat: widget.calendarFormat,
-                locale: widget.locale,
-                onFormatButtonTap: (format) {
-                  assert(
-                    widget.onFormatChanged != null,
-                    'Using `FormatButton` without providing `onFormatChanged` will have no effect.',
-                  );
+              return widget.defaultHeader
+                  ? CalendarHeader(
+                      headerTitleBuilder:
+                          widget.calendarBuilders.headerTitleBuilder,
+                      focusedMonth: value,
+                      onLeftChevronTap: _onLeftChevronTap,
+                      onRightChevronTap: _onRightChevronTap,
+                      onHeaderTap: () => widget.onHeaderTapped?.call(value),
+                      onHeaderLongPress: () =>
+                          widget.onHeaderLongPressed?.call(value),
+                      headerStyle: widget.headerStyle,
+                      availableCalendarFormats: widget.availableCalendarFormats,
+                      calendarFormat: widget.calendarFormat,
+                      locale: widget.locale,
+                      onFormatButtonTap: (format) {
+                        assert(
+                          widget.onFormatChanged != null,
+                          'Using `FormatButton` without providing `onFormatChanged` will have no effect.',
+                        );
 
-                  widget.onFormatChanged?.call(format);
-                },
-              );
+                        widget.onFormatChanged?.call(format);
+                      },
+                    )
+                  : CalendarHeaderOnlyOne(
+                      focusedMonth: value,
+                      onHorizontalDragUpdate: _onHorizontalDragUpdate,
+                      onLeftChevronTap: _onLeftChevronTap,
+                      onRightChevronTap: _onRightChevronTap,
+                      controller: controller,
+                    );
             },
           ),
         Flexible(
@@ -501,8 +524,22 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
             sixWeekMonthsEnforced: widget.sixWeekMonthsEnforced,
             onVerticalSwipe: _swipeCalendarFormat,
             onPageChanged: (focusedDay) {
+              var prevIndex = _focusedDay.value.month;
+              var currentIndex = focusedDay.month;
               _focusedDay.value = focusedDay;
               widget.onPageChanged?.call(focusedDay);
+              var diff = currentIndex - prevIndex;
+              if (diff == 1) {
+                controller.next(animation: true);
+              } else if (diff == -1) {
+                controller.previous(animation: true);
+              } else {
+                if (diff > 0) {
+                  controller.previous(animation: true);
+                } else {
+                  controller.next(animation: true);
+                }
+              }
             },
             dowBuilder: (BuildContext context, DateTime day) {
               Widget? dowCell =
