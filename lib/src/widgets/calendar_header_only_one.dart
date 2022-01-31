@@ -32,24 +32,19 @@ class CalendarHeaderOnlyOne extends StatelessWidget {
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 if (Months.values[index].index + 1 == focusedMonth.month) {
-                  return Text(
-                    DateFormat('MMM').format(focusedMonth),
-                    style: getStyle(
-                        fontSize: 26,
-                        color: Color.fromRGBO(72, 124, 164, 1),
-                        weight: FontWeight.w500),
-                  );
+                  return _month(Months.values[focusedMonth.month - 1],
+                      color: Color.fromRGBO(72, 124, 164, 1));
                 }
                 return _month(Months.values[index]);
               }),
         ));
   }
 
-  Widget _month(Months month) {
+  Widget _month(Months month, {Color? color}) {
     return Container(
       child: Text(
         month.getMonths(),
-        style: getStyle(),
+        style: getStyle(color: color ?? Color.fromRGBO(133, 145, 154, 1)),
       ),
     );
   }
